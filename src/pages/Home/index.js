@@ -16,12 +16,10 @@ const schema = Yup.object().shape({
     .required('Digite um CPF válido'),
 });
 
+const options = [{ id: 'sim', title: 'Sim' }, { id: 'não', title: 'Não' }];
+
 export default function Home() {
   const dispatch = useDispatch();
-
-  function handleSubmit(data) {
-    dispatch(updateProfileRequest(data));
-  }
 
   const [result, setResult] = useState({
     name: '',
@@ -32,6 +30,10 @@ export default function Home() {
   });
 
   const [input, setInput] = useState('');
+
+  function handleSubmit(data) {
+    dispatch(updateProfileRequest(data));
+  }
 
   async function consultar() {
     const response = await api.post('consultacpf', {
@@ -53,28 +55,36 @@ export default function Home() {
           onInput={e => setInput(e.target.value)}
           autoComplete="off"
         />
-        <button type="submit" onClick={consultar}>
-          Consultar
-        </button>
+        <button type="submit">Consultar</button>
         <hr />
       </Form>
       <h4> Resultado da Busca:</h4>
       <Form initialData={result} onSubmit={handleSubmit}>
         <h4>Nome:</h4>
         <Input name="name" disabled />
+
         <h4>CPF:</h4>
         <Input name="cpf" disabled />
+
         <h4>Estado de origem:</h4>
         <Input name="uf_origem" disabled />
+
         <h4>Pendência:</h4>
-        <Input name="pendencia" />
+        <Select
+          name="pendencia"
+          value={result.pendencia}
+          onChange={e => setResult({ ...result, pendencia: e.target.value })}
+          options={options}
+        />
+
         <h4>Estado da pendência:</h4>
         <Select
           name="uf_pendencia"
           value={result.uf_pendencia}
+          onChange={e => setResult({ ...result, uf_pendencia: e.target.value })}
           options={estados}
         />
-        {/* <Input name="uf_pendencia" /> */}
+
         <button type="submit">Alterar Pendência</button>
       </Form>
     </Container>

@@ -1,4 +1,5 @@
 const estados = [
+  { id: '', title: '' },
   { id: 'AC', title: 'Acre' },
   { id: 'AL', title: 'Alagoas' },
   { id: 'AP', title: 'Amapá' },

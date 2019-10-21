@@ -11,7 +11,11 @@ export function* updateProfile({ payload }) {
 
     const response = yield call(api.put, 'pessoas', payload.data);
 
-    toast.success('Perfil atualizado');
+    toast.success('Perfil atualizado', {
+      onClose() {
+        window.location.reload();
+      },
+    });
 
     yield put(updateProfileSuccess(response.data));
   } catch (err) {

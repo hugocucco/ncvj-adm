@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { signOut } from '~/store/modules/auth/actions';
 
 import logo from '~/assets/logo.svg';
@@ -19,7 +19,7 @@ export default function Header() {
         <nav>
           <img src={logo} alt="Detetive" />
           <strong> NCVJ Admin </strong>
-          <Link to="/home">Home</Link>
+          {/* <Link to="/home">Home</Link> */}
         </nav>
 
         <aside>

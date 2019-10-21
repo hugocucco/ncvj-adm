@@ -24,7 +24,12 @@ export default function SignIn() {
       <img src={logo} alt="Detetive" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <Input name="username" type="username" placeholder="Username" />
+        <Input
+          name="username"
+          type="username"
+          placeholder="Username"
+          autoComplete="off"
+        />
         <Input name="password" type="password" placeholder="Senha" />
 
         <button type="submit">{loading ? 'Carregando...' : 'Entrar'}</button>

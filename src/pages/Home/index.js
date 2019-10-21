@@ -35,6 +35,10 @@ export default function Home() {
     dispatch(updateProfileRequest(data));
   }
 
+  function Limpar() {
+    window.location.reload();
+  }
+
   async function consultar() {
     const response = await api.post('consultacpf', {
       cpf: input,
@@ -44,9 +48,9 @@ export default function Home() {
   return (
     <Container>
       <header>
-        <strong>Consultar Pessoas e Alterar Pendência</strong>
+        <strong>Consultar pessoas e alterar pendência</strong>
       </header>
-      <h3> Digite o CPF e depois clique em Consultar:</h3>
+      <h4> Digite o CPF e depois clique em Consultar:</h4>
       <Form schema={schema} onSubmit={consultar}>
         <Input
           name="cpf"
@@ -86,7 +90,11 @@ export default function Home() {
         />
 
         <button type="submit">Alterar Pendência</button>
+        <hr />
       </Form>
+      <button type="button" onClick={Limpar}>
+        Limpar
+      </button>
     </Container>
   );
 }

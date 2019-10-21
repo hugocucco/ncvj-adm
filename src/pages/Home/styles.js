@@ -31,12 +31,22 @@ export const Container = styled.div`
       border-radius: 4px;
       height: 44px;
       padding: 0 15px;
-      collor: #fff;
+      color: #fff;
       margin: 0 0 10px;
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
       }
+    }
+
+    select {
+      background: rgba(0, 0, 0, 0.2);
+      border: 0;
+      border-radius: 4px;
+      height: 44px;
+      padding: 0 15px;
+      color: #fff;
+      margin: 0 0 10px;
     }
 
     span {

@@ -17,10 +17,11 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    // if (!user.isAdmin) {
-    //   toast.error('Usuário não é administrador');
-    //   return;
-    // }
+    if (!user.is_admin) {
+      yield put(signFailure());
+      toast.error('Usuário não é administrador');
+      return;
+    }
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 

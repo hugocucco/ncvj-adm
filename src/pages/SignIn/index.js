@@ -21,6 +21,13 @@ export default function SignIn() {
   }
   return (
     <>
+      <strong> Nada Consta Virtual Jurídico Admin</strong>
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
       <img src={logo} alt="Detetive" />
 
       <Form schema={schema} onSubmit={handleSubmit}>

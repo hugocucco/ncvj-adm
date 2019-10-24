@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Select } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
@@ -16,7 +17,11 @@ const schema = Yup.object().shape({
     .required('Digite um CPF válido'),
 });
 
-const options = [{ id: 'sim', title: 'Sim' }, { id: 'não', title: 'Não' }];
+const options = [
+  { id: '', title: '' },
+  { id: 'sim', title: 'Sim' }, 
+  { id: 'não', title: 'Não' }
+];
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -40,10 +45,15 @@ export default function Home() {
   }
 
   async function consultar() {
-    const response = await api.post('consultacpf', {
-      cpf: input,
-    });
-    setResult(response.data);
+    try {
+      const response = await api.post('consultacpf', {
+        cpf: input,
+      });
+      setResult(response.data);
+    } catch (err) {
+      toast.error('CPF não encontrado na base de dados.');
+      setResult(''); 
+    }
   }
   return (
     <Container>

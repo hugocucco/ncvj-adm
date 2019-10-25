@@ -52,59 +52,77 @@ export default function Home() {
       setResult(response.data);
     } catch (err) {
       toast.error('CPF não encontrado na base de dados.');
-      setResult('');
+      setInput('');
     }
+  }
+  
+  function ConditionalRender() {
+    if (result.name === '') {
+      return (
+        <>
+          <h4> Digite o CPF e depois clique em Consultar:</h4>
+          <Form schema={schema} onSubmit={consultar}>
+            <Input
+              name="cpf"
+              value={input}
+              placeholder=" Digite o CPF"
+              onInput={e => setInput(e.target.value)}
+              autoComplete="off"
+            />
+            <button type="submit">Consultar</button>
+            <hr />
+          </Form>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <h4> Resultado da Busca:</h4>
+        <Form initialData={result} onSubmit={handleSubmit}>
+          <h4>Nome:</h4>
+          <Input name="name" disabled />
+
+          <h4>CPF:</h4>
+          <Input name="cpf" disabled />
+
+          <h4>Estado de origem:</h4>
+          <Input name="uf_origem" disabled />
+
+          <h4>Pendência:</h4>
+          <Select
+            name="pendencia"
+            value={result.pendencia}
+            onChange={e => setResult({ ...result, pendencia: e.target.value })}
+            options={options}
+          />
+
+          <h4>Estado da pendência:</h4>
+          <Select
+            name="uf_pendencia"
+            value={result.uf_pendencia}
+            onChange={e =>
+              setResult({ ...result, uf_pendencia: e.target.value })
+            }
+            options={estados}
+          />
+
+          <button type="submit">Alterar Pendência</button>
+          <hr />
+        </Form>
+        <button type="button" onClick={Limpar}>
+          Nova Consulta
+        </button>
+      </>
+    );
   }
   return (
     <Container>
       <header>
         <strong>Consultar pessoas e alterar pendência</strong>
       </header>
-      <h4> Digite o CPF e depois clique em Consultar:</h4>
-      <Form schema={schema} onSubmit={consultar}>
-        <Input
-          name="cpf"
-          value={input}
-          placeholder=" Digite o CPF"
-          onInput={e => setInput(e.target.value)}
-          autoComplete="off"
-        />
-        <button type="submit">Consultar</button>
-        <hr />
-      </Form>
-      <h4> Resultado da Busca:</h4>
-      <Form initialData={result} onSubmit={handleSubmit}>
-        <h4>Nome:</h4>
-        <Input name="name" disabled />
 
-        <h4>CPF:</h4>
-        <Input name="cpf" disabled />
-
-        <h4>Estado de origem:</h4>
-        <Input name="uf_origem" disabled />
-
-        <h4>Pendência:</h4>
-        <Select
-          name="pendencia"
-          value={result.pendencia}
-          onChange={e => setResult({ ...result, pendencia: e.target.value })}
-          options={options}
-        />
-
-        <h4>Estado da pendência:</h4>
-        <Select
-          name="uf_pendencia"
-          value={result.uf_pendencia}
-          onChange={e => setResult({ ...result, uf_pendencia: e.target.value })}
-          options={estados}
-        />
-
-        <button type="submit">Alterar Pendência</button>
-        <hr />
-      </Form>
-      <button type="button" onClick={Limpar}>
-        Limpar
-      </button>
+      {ConditionalRender()}
     </Container>
   );
 }

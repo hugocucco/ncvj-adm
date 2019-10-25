@@ -19,8 +19,8 @@ const schema = Yup.object().shape({
 
 const options = [
   { id: '', title: '' },
-  { id: 'sim', title: 'Sim' }, 
-  { id: 'não', title: 'Não' }
+  { id: 'sim', title: 'Sim' },
+  { id: 'não', title: 'Não' },
 ];
 
 export default function Home() {
@@ -52,7 +52,7 @@ export default function Home() {
       setResult(response.data);
     } catch (err) {
       toast.error('CPF não encontrado na base de dados.');
-      setResult(''); 
+      setResult('');
     }
   }
   return (

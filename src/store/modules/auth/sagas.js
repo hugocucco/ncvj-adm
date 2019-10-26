@@ -19,7 +19,11 @@ export function* signIn({ payload }) {
 
     if (!user.is_admin) {
       yield put(signFailure());
-      toast.error('Usuário não é administrador');
+      toast.error('Usuário não é administrador', {
+        onClose() {
+          window.location.reload();
+        },
+      });
       return;
     }
 

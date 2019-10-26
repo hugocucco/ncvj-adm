@@ -17,11 +17,7 @@ const schema = Yup.object().shape({
     .required('Digite um CPF válido'),
 });
 
-const options = [
-  { id: '', title: '' },
-  { id: 'sim', title: 'Sim' },
-  { id: 'não', title: 'Não' },
-];
+const options = [{ id: 'sim', title: 'Sim' }, { id: 'não', title: 'Não' }];
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -69,6 +65,7 @@ export default function Home() {
               onInput={e => setInput(e.target.value)}
               autoComplete="off"
             />
+            <hr />
             <button type="submit">Consultar</button>
             <hr />
           </Form>

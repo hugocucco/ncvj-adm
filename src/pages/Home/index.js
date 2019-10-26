@@ -55,7 +55,7 @@ export default function Home() {
       setInput('');
     }
   }
-  
+
   function ConditionalRender() {
     if (result.name === '') {
       return (

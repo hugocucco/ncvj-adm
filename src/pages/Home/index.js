@@ -32,6 +32,8 @@ export default function Home() {
 
   const [input, setInput] = useState('');
 
+  const [loading, setLoading] = useState('');
+
   function handleSubmit(data) {
     dispatch(updateProfileRequest(data));
   }
@@ -42,13 +44,16 @@ export default function Home() {
 
   async function consultar() {
     try {
+      setLoading(true);
       const response = await api.post('consultacpf', {
         cpf: input,
       });
       setResult(response.data);
+      setLoading(false);
     } catch (err) {
       toast.error('CPF não encontrado na base de dados.');
       setInput('');
+      setLoading(false);
     }
   }
 
@@ -66,7 +71,9 @@ export default function Home() {
               autoComplete="off"
             />
             <hr />
-            <button type="submit">Consultar</button>
+            <button type="submit">
+              {loading ? 'Carregando...' : 'Consultar'}
+            </button>
             <hr />
           </Form>
         </>

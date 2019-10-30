@@ -19,7 +19,7 @@ export const Content = styled.div`
     align-items: center;
 
     img {
-      width: 50%;
+      width: 15%;
       margin-right: 5px;
       padding-right: 5px;
     }

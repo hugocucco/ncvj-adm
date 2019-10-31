@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Select } from '@rocketseat/unform';
+import LoadingOverlay from 'react-loading-overlay';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
@@ -121,12 +122,24 @@ export default function Home() {
     );
   }
   return (
-    <Container>
-      <header>
-        <strong>Consultar pessoas e alterar pendência</strong>
-      </header>
+    <LoadingOverlay
+      active={loading}
+      styles={{
+        overlay: base => ({
+          ...base,
+          background: 'rgb(0, 0, 0) transparent',
+        }),
+      }}
+      spinner
+      text="Buscando CPF..."
+    >
+      <Container>
+        <header>
+          <strong>Consultar pessoas e alterar pendência</strong>
+        </header>
 
-      {ConditionalRender()}
-    </Container>
+        {ConditionalRender()}
+      </Container>
+    </LoadingOverlay>
   );
 }

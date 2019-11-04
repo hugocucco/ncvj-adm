@@ -4,6 +4,8 @@ import { Form, Input, Select } from '@rocketseat/unform';
 import LoadingOverlay from 'react-loading-overlay';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { isCPF } from 'brazilian-values';
+import { cpfMask } from '../_layouts/default/mask';
 import api from '~/services/api';
 
 import { updateProfileRequest } from '~/store/modules/user/actions';
@@ -13,8 +15,8 @@ import { Container } from './styles';
 import estados from '~/pages/_layouts/default/estados';
 
 const schema = Yup.object().shape({
-  cpf: Yup.number('O CPF é composto por somente números!')
-    .min(11, 'O CPF precisa ter no mínimo 11 dígitos')
+  cpf: Yup.string()
+    .min(14, 'O CPF precisa ter no mínimo 11 dígitos')
     .required('Digite um CPF válido'),
 });
 
@@ -32,8 +34,8 @@ export default function Home() {
   });
 
   const [input, setInput] = useState('');
-
   const [loading, setLoading] = useState('');
+  const [cpf, setCPF] = useState('');
 
   function handleSubmit(data) {
     dispatch(updateProfileRequest(data));
@@ -46,11 +48,16 @@ export default function Home() {
   async function consultar() {
     try {
       setLoading(true);
-      const response = await api.post('consultacpf', {
-        cpf: input,
-      });
-      setResult(response.data);
-      setLoading(false);
+      if (!isCPF(cpf)) {
+        toast.error('CPF inválido!');
+        setLoading(false);
+      } else {
+        const response = await api.post('consultacpf', {
+          cpf: input,
+        });
+        setResult(response.data);
+        setLoading(false);
+      }
     } catch (err) {
       toast.error('CPF não encontrado na base de dados.');
       setInput('');
@@ -66,10 +73,11 @@ export default function Home() {
           <Form schema={schema} onSubmit={consultar}>
             <Input
               name="cpf"
-              value={input}
+              value={(input, cpfMask(cpf))}
               placeholder=" Digite o CPF"
               onInput={e => setInput(e.target.value)}
               autoComplete="off"
+              onChange={e => setCPF(e.target.value)}
             />
             <hr />
             <button type="submit">
